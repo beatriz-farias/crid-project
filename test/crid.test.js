@@ -2,6 +2,7 @@ const { expect } = require("chai");
 const hre = require("hardhat");
 const ethers = hre.ethers;
 const { time } = require("@nomicfoundation/hardhat-network-helpers");
+console.log("ethers.utils =", ethers.utils);
 
 describe("CRID Contract", function () {
     let crid;
