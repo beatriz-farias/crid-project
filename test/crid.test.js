@@ -1,5 +1,6 @@
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
+const hre = require("hardhat");
+const ethers = hre.ethers;
 const { time } = require("@nomicfoundation/hardhat-network-helpers");
 
 describe("CRID Contract", function () {
