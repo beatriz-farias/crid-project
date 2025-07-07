@@ -11,6 +11,7 @@ describe("CRID Contract", function () {
 
     async function signEnrollment(signer, courseList) {
         const messageHash = await crid.getMessageHash(courseList);
+        const ethSignedMessageHash = ethers.utils.hashMessage(ethers.utils.arrayify(messageHash));
         const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
         return signature;
 }
