@@ -1,6 +1,5 @@
 const { expect } = require("chai");
-const hre = require("hardhat");
-const ethers = require("ethers");  // Importa a biblioteca ethers completa
+const { ethers } = require("hardhat"); // IMPORTANTE: usa o ethers do Hardhat
 const { time } = require("@nomicfoundation/hardhat-network-helpers");
 
 describe("CRID Contract", function () {
@@ -11,13 +10,14 @@ describe("CRID Contract", function () {
 
     async function signEnrollment(signer, courseList) {
         const messageHash = await crid.getMessageHash(courseList);
+        // usa ethers.utils.arrayify do hardhat.ethers
         const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
         return signature;
     }
 
     beforeEach(async function () {
-        [coordinator, student, other] = await hre.ethers.getSigners();
-        const CRIDFactory = await hre.ethers.getContractFactory("CRID");
+        [coordinator, student, other] = await ethers.getSigners();
+        const CRIDFactory = await ethers.getContractFactory("CRID");
         crid = await CRIDFactory.connect(coordinator).deploy(student.address, DURATION);
     });
 
@@ -28,6 +28,7 @@ describe("CRID Contract", function () {
         });
 
         it("Should set the correct enrollment deadline", async function () {
+            // Aqui usa ethers.provider para pegar o bloco
             const block = await ethers.provider.getBlock("latest");
             const expectedDeadline = block.timestamp + DURATION;
             expect(await crid.enrollmentDeadline()).to.be.closeTo(
@@ -47,11 +48,11 @@ describe("CRID Contract", function () {
 
             expect(await crid.isEnrolled()).to.be.true;
 
-            // CORREÇÃO FINAL: Chamando a nova função getter
             const retrievedCourses = await crid.getEnrolledCourses();
             expect(retrievedCourses).to.deep.equal(courses);
         });
 
+        // Os outros testes mantêm a mesma estrutura, apenas garanta que usam ethers do hardhat
         it("Should revert if the signature is invalid (signed by another account)", async function () {
             const signature = await signEnrollment(other, courses);
             
