@@ -13,8 +13,10 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.13",
-    "@nomicfoundation/hardhat-toolbox": "^6.0.0",
-    "hardhat": "^2.25.0"
-  }
+  "@nomicfoundation/hardhat-network-helpers": "^1.0.13",
+  "@nomicfoundation/hardhat-toolbox": "^6.0.0",
+  "hardhat": "^2.25.0",
+  "ethers": "^6.8.1",
+  "chai": "^4.3.7"
+}
 }
