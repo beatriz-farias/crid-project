@@ -1,8 +1,7 @@
 const { expect } = require("chai");
 const hre = require("hardhat");
-const ethers = hre.ethers;
+const ethers = require("ethers");  // Importa a biblioteca ethers completa
 const { time } = require("@nomicfoundation/hardhat-network-helpers");
-console.log("ethers.utils =", ethers.utils);
 
 describe("CRID Contract", function () {
     let crid;
@@ -14,11 +13,11 @@ describe("CRID Contract", function () {
         const messageHash = await crid.getMessageHash(courseList);
         const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
         return signature;
-}
+    }
 
     beforeEach(async function () {
-        [coordinator, student, other] = await ethers.getSigners();
-        const CRIDFactory = await ethers.getContractFactory("CRID");
+        [coordinator, student, other] = await hre.ethers.getSigners();
+        const CRIDFactory = await hre.ethers.getContractFactory("CRID");
         crid = await CRIDFactory.connect(coordinator).deploy(student.address, DURATION);
     });
 
