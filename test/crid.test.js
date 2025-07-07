@@ -1,8 +1,6 @@
 const { expect } = require("chai");
-const hre = require("hardhat");
-const ethers = hre.ethers;
+const { ethers } = require("hardhat");
 const { time } = require("@nomicfoundation/hardhat-network-helpers");
-console.log("ethers.utils =", ethers.utils);
 
 describe("CRID Contract", function () {
     let crid;
@@ -12,7 +10,6 @@ describe("CRID Contract", function () {
 
     async function signEnrollment(signer, courseList) {
         const messageHash = await crid.getMessageHash(courseList);
-        const ethSignedMessageHash = ethers.utils.hashMessage(ethers.utils.arrayify(messageHash));
         const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
         return signature;
 }
